@@ -1,23 +1,23 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:news_apps/app/widgets/Components/NavigationBar.dart';
 
-class HomePageController extends GetxController {
-  //TODO: Implement HomePageController
+import 'bottom_nav_controller.dart';
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
+class HomePageController extends StatelessWidget {
+  const HomePageController({super.key});
 
   @override
-  void onReady() {
-    super.onReady();
+  Widget build(BuildContext context) {
+    BottomNavController controller = Get.put(
+      BottomNavController(),
+    );
+    return Scaffold(
+      floatingActionButton: const MyBottomNav(),
+      body: Obx(
+        () => controller.pages[controller.index.value],
+      ),
+    );
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

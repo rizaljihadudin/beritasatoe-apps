@@ -1,28 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:news_apps/app/modules/HomePage/controllers/news_controller.dart';
+import 'package:news_apps/app/routes/app_pages.dart';
 import 'package:news_apps/app/widgets/HomePage/NewsTile.dart';
 import 'package:news_apps/app/widgets/HomePage/TrendingCard.dart';
-import '../../../widgets/Components/NavigationBar.dart';
 import '../controllers/home_page_controller.dart';
 
 class HomePageView extends GetView<HomePageController> {
   const HomePageView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    NewsController newsController = Get.put(NewsController());
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        title: Text(
-          'BERITASATOE',
-          style: Theme.of(context).textTheme.headlineLarge,
-        ),
-      ),
-      floatingActionButton: MyBottomNav(),
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: SingleChildScrollView(
           child: Column(
             children: [
+              const SizedBox(
+                height: 40,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: const Icon(
+                      Icons.dashboard,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const Text(
+                    "BERITASATOE",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      newsController.getTrendingNews();
+                    },
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: const Icon(
+                        Icons.person,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 40,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -39,38 +82,27 @@ class HomePageView extends GetView<HomePageController> {
               const SizedBox(
                 height: 20,
               ),
-              const SingleChildScrollView(
+              SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    TrendingCard(
-                      imageUrl:
-                          "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1602062671/a3cvffki8matxnhyvohd.jpg",
-                      title:
-                          "Juru Parkir di Tebing Tinggi Tewas Terseret Arus saat Cari Kepah",
-                      author: "John Doe",
-                      tag: "Trending no 1",
-                      time: "2 Hari yang lalu",
-                    ),
-                    TrendingCard(
-                      imageUrl:
-                          "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01j4gwbtcwdt9e64wj4fvxca04.jpg",
-                      title:
-                          "18 Saksi Diperiksa Polisi soal Dugaan Perundungan dan Pelecehan SMA Binus Jaksel",
-                      author: "John Doe",
-                      tag: "Trending no 2",
-                      time: "2 Days ago",
-                    ),
-                    TrendingCard(
-                      imageUrl:
-                          "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01j7wcbdhwad2b5ep3r7g35kvr.jpg",
-                      title:
-                          "Puncak Masih Macet Pagi Ini, Wisatawan Terjebak Sejak Kemarin Malam",
-                      author: "John Doe",
-                      tag: "Trending no 3",
-                      time: "2 Hari yang lalu",
-                    ),
-                  ],
+                child: Obx(
+                  () => Row(
+                    children: newsController.trendingNewsList
+                        .map(
+                          (e) => TrendingCard(
+                            imageUrl: e.urlToImage!,
+                            title: e.title!,
+                            author: e.author! ?? "Unknown",
+                            tag: "Trending no 1",
+                            time: e.publishedAt!,
+                            onTap: () {
+                              Get.toNamed(
+                                Routes.NEWS_DETAIL,
+                              );
+                            },
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -92,33 +124,20 @@ class HomePageView extends GetView<HomePageController> {
               const SizedBox(
                 height: 20,
               ),
-              Column(
-                children: [
-                  NewsTile(
-                    imageUrl:
-                        "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1602062671/a3cvffki8matxnhyvohd.jpg",
-                    title:
-                        "Juru Parkir di Tebing Tinggi Tewas Terseret Arus saat Cari Kepah",
-                    author: "John Doe",
-                    time: "2 Hari yang lalu",
-                  ),
-                  NewsTile(
-                    imageUrl:
-                        "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01j4gwbtcwdt9e64wj4fvxca04.jpg",
-                    title:
-                        "18 Saksi Diperiksa Polisi soal Dugaan Perundungan dan Pelecehan SMA Binus Jaksel",
-                    author: "John Doe",
-                    time: "2 Days ago",
-                  ),
-                  NewsTile(
-                    imageUrl:
-                        "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01j7wcbdhwad2b5ep3r7g35kvr.jpg",
-                    title:
-                        "Puncak Masih Macet Pagi Ini, Wisatawan Terjebak Sejak Kemarin Malam",
-                    author: "John Doe",
-                    time: "2 Hari yang lalu",
-                  ),
-                ],
+              Obx(
+                () => Column(
+                  children: newsController.newsForYouList
+                      .map(
+                        (e) => NewsTile(
+                          imageUrl:
+                              "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1602062671/a3cvffki8matxnhyvohd.jpg",
+                          title: e.title!,
+                          author: e.author! ?? "Unknown",
+                          time: e.publishedAt!,
+                        ),
+                      )
+                      .toList(),
+                ),
               )
             ],
           ),

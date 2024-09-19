@@ -60,7 +60,12 @@ class NewsTile extends StatelessWidget {
                     const SizedBox(
                       width: 10,
                     ),
-                    Text(author),
+                    Flexible(
+                      child: Text(
+                        author,
+                        maxLines: 2,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(
