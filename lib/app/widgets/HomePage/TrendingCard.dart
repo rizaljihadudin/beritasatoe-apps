@@ -92,6 +92,9 @@ class TrendingCard extends StatelessWidget {
                 ),
                 CircleAvatar(
                   backgroundColor: Theme.of(context).colorScheme.primary,
+                  child: Text(
+                    author[0],
+                  ),
                 ),
                 const SizedBox(
                   width: 10,

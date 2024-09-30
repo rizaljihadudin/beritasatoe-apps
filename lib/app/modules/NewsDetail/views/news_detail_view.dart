@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
+import '../../../models/NewsModel.dart';
 import '../controllers/news_detail_controller.dart';
 
 class NewsDetailView extends GetView<NewsDetailController> {
-  const NewsDetailView({Key? key}) : super(key: key);
+  const NewsDetailView({super.key});
   @override
   Widget build(BuildContext context) {
+    final NewsModel news;
+    news = Get.arguments;
     return Scaffold(
       // appBar: AppBar(
       //   title: const Text('NewsDetailView'),
@@ -25,18 +26,16 @@ class NewsDetailView extends GetView<NewsDetailController> {
                       onTap: () {
                         Get.back();
                       },
-                      child: Container(
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.arrow_back_ios_new,
-                              color: Theme.of(context).colorScheme.onBackground,
-                            ),
-                            const Text(
-                              "Kembali",
-                            ),
-                          ],
-                        ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.arrow_back_ios_new,
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
+                          const Text(
+                            "Kembali",
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -54,7 +53,8 @@ class NewsDetailView extends GetView<NewsDetailController> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Image.network(
-                            "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01j4gwbtcwdt9e64wj4fvxca04.jpg",
+                            news.urlToImage ??
+                                "https://fastly.picsum.photos/id/862/300/200.jpg?hmac=xU4Z4sQtACAxj4xQu2fRhJHItIOd9Yg5AtWCguPng9c",
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -66,8 +66,8 @@ class NewsDetailView extends GetView<NewsDetailController> {
                   height: 20,
                 ),
                 Text(
-                  "18 Saksi Diperiksa Polisi soal Dugaan Perundungan dan Pelecehan SMA Binus Jaksel",
-                  style: TextStyle(
+                  news.title!,
+                  style: const TextStyle(
                     fontSize: 23,
                     fontWeight: FontWeight.bold,
                   ),
@@ -77,9 +77,13 @@ class NewsDetailView extends GetView<NewsDetailController> {
                 ),
                 Row(
                   children: [
-                    Text(
-                      "2 day ago * Kriminal",
-                      style: Theme.of(context).textTheme.labelSmall,
+                    Expanded(
+                      child: Text(
+                        "${news.author} * ${news.publishedAt}",
+                        style: Theme.of(context).textTheme.labelSmall,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),
@@ -91,12 +95,15 @@ class NewsDetailView extends GetView<NewsDetailController> {
                     CircleAvatar(
                       radius: 15,
                       backgroundColor: Colors.red,
+                      child: Text(
+                        news.author![0].toUpperCase(),
+                      ),
                     ),
                     const SizedBox(
                       width: 10,
                     ),
                     Text(
-                      "John Doe",
+                      news.author!,
                       style: TextStyle(
                         fontSize: 18,
                         color: Theme.of(context).colorScheme.secondaryContainer,
@@ -111,7 +118,7 @@ class NewsDetailView extends GetView<NewsDetailController> {
                   children: [
                     Flexible(
                       child: Text(
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                        news.description ?? news.content!,
                         style: TextStyle(
                           fontSize: 18,
                           color:

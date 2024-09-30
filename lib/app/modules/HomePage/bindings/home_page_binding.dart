@@ -15,7 +15,7 @@ class HomePageBinding extends Bindings {
       () => BottomNavController(),
     );
     Get.lazyPut<HomePageController>(
-      () => HomePageController(),
+      () => const HomePageController(),
     );
   }
 }

@@ -22,12 +22,13 @@ class ArtikelPageView extends GetView<ArtikelPageController> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView(
-            children: const [
-              SearchBox(),
-              SizedBox(height: 20),
+            children: [
+              const SearchBox(),
+              const SizedBox(height: 20),
               Column(
                 children: [
                   NewsTile(
+                    onTap: () {},
                     imageUrl:
                         "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1602062671/a3cvffki8matxnhyvohd.jpg",
                     title:
@@ -36,6 +37,7 @@ class ArtikelPageView extends GetView<ArtikelPageController> {
                     time: "2 Hari yang lalu",
                   ),
                   NewsTile(
+                    onTap: () {},
                     imageUrl:
                         "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01j4gwbtcwdt9e64wj4fvxca04.jpg",
                     title:
@@ -44,6 +46,7 @@ class ArtikelPageView extends GetView<ArtikelPageController> {
                     time: "2 Days ago",
                   ),
                   NewsTile(
+                    onTap: () {},
                     imageUrl:
                         "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01j7wcbdhwad2b5ep3r7g35kvr.jpg",
                     title:
@@ -52,6 +55,7 @@ class ArtikelPageView extends GetView<ArtikelPageController> {
                     time: "2 Hari yang lalu",
                   ),
                   NewsTile(
+                    onTap: () {},
                     imageUrl:
                         "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01j4gwbtcwdt9e64wj4fvxca04.jpg",
                     title:
@@ -60,6 +64,7 @@ class ArtikelPageView extends GetView<ArtikelPageController> {
                     time: "2 Days ago",
                   ),
                   NewsTile(
+                    onTap: () {},
                     imageUrl:
                         "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01j7wcbdhwad2b5ep3r7g35kvr.jpg",
                     title:

@@ -91,12 +91,13 @@ class HomePageView extends GetView<HomePageController> {
                           (e) => TrendingCard(
                             imageUrl: e.urlToImage!,
                             title: e.title!,
-                            author: e.author! ?? "Unknown",
+                            author: e.author ?? "Unknown",
                             tag: "Trending no 1",
                             time: e.publishedAt!,
                             onTap: () {
                               Get.toNamed(
                                 Routes.NEWS_DETAIL,
+                                arguments: e,
                               );
                             },
                           ),
@@ -129,15 +130,24 @@ class HomePageView extends GetView<HomePageController> {
                   children: newsController.newsForYouList
                       .map(
                         (e) => NewsTile(
-                          imageUrl:
-                              "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1602062671/a3cvffki8matxnhyvohd.jpg",
+                          onTap: () {
+                            Get.toNamed(
+                              Routes.NEWS_DETAIL,
+                              arguments: e,
+                            );
+                          },
+                          imageUrl: e.urlToImage ??
+                              "https://fastly.picsum.photos/id/862/300/200.jpg?hmac=xU4Z4sQtACAxj4xQu2fRhJHItIOd9Yg5AtWCguPng9c",
                           title: e.title!,
-                          author: e.author! ?? "Unknown",
+                          author: e.author ?? "Unknown",
                           time: e.publishedAt!,
                         ),
                       )
                       .toList(),
                 ),
+              ),
+              const SizedBox(
+                height: 20,
               )
             ],
           ),
