@@ -51,7 +51,9 @@ class NewsDetailView extends GetView<NewsDetailController> {
                     children: [
                       Expanded(
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(
+                            20,
+                          ),
                           child: Image.network(
                             news.urlToImage ??
                                 "https://fastly.picsum.photos/id/862/300/200.jpg?hmac=xU4Z4sQtACAxj4xQu2fRhJHItIOd9Yg5AtWCguPng9c",
