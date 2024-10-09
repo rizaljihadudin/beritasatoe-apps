@@ -21,24 +21,26 @@ class ArtikelPageView extends GetView<ArtikelPageController> {
             children: [
               const SearchBox(),
               const SizedBox(height: 20),
-              Column(
-                children: newsController.newsForYouList
-                    .map(
-                      (e) => NewsTile(
-                        onTap: () {
-                          Get.toNamed(
-                            Routes.NEWS_DETAIL,
-                            arguments: e,
-                          );
-                        },
-                        imageUrl: e.urlToImage ?? newsController.imageUrl,
-                        title: e.title!,
-                        author: e.author ?? "Unknown",
-                        time: e.publishedAt!,
-                      ),
-                    )
-                    .toList(),
-              )
+              Obx(
+                () => Column(
+                  children: newsController.newsForYouList
+                      .map(
+                        (e) => NewsTile(
+                          onTap: () {
+                            Get.toNamed(
+                              Routes.NEWS_DETAIL,
+                              arguments: e,
+                            );
+                          },
+                          imageUrl: e.urlToImage ?? newsController.imageUrl,
+                          title: e.title!,
+                          author: e.author ?? "Unknown",
+                          time: e.publishedAt!,
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
             ],
           ),
         ),

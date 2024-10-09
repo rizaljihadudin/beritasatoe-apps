@@ -141,4 +141,31 @@ class NewsController extends GetxController {
     }
     isBusinessLoading.value = false;
   }
+
+  Future<void> searchNews(String search) async {
+    isNewsForYouLoading.value = true;
+    var baseURL =
+        "https://newsapi.org/v2/everything?q=${search}&apiKey=1dfddb21214a4fae89597ef31f04d573";
+    try {
+      var response = await http.get(Uri.parse(baseURL));
+      if (response.statusCode == 200) {
+        var body = jsonDecode(response.body);
+        var articles = body["articles"];
+        newsForYouList.clear();
+        int i = 0;
+        for (var news in articles) {
+          i++;
+          newsForYouList.add(NewsModel.fromJson(news));
+          if (i == 10) {
+            break;
+          }
+        }
+      } else {
+        print("Something went wrong in Trending news");
+      }
+    } catch (e) {
+      print(e);
+    }
+    isNewsForYouLoading.value = false;
+  }
 }
